@@ -1,0 +1,27 @@
+import unittest
+from unittest.mock import patch
+
+from jc_decrypter.main import process, main
+
+
+class TestMainProcess(unittest.TestCase):
+    @patch("jc_decrypter.processing.extrated.extrated_all_data")
+    def test_arg_extrateFiles(self, mk_extrated_all_data):
+
+        process(["--extrateFiles"])
+        mk_extrated_all_data.assert_called_once_with()
+
+    def test_not_arg(self):
+
+        with self.assertRaises(SystemExit) as cm:
+            process([])
+            self.assertEqual("Vc deve escolher algum parametro", str(cm.exception))
+
+
+class TestMainMain(unittest.TestCase):
+    @patch("jc_decrypter.main.process")
+    def test_main_process(self, mk_process):
+
+        mk_process.return_value = 0
+        self.assertRaises(SystemExit, main)
+        mk_process.assert_called_once_with(["test"])
