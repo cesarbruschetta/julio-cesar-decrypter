@@ -5,14 +5,9 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "README.md")) as f:
     README = f.read()
 
-requires = ["requests"]
+requires = ["requests", "requests-toolbelt"]
 
-tests_require = [
-    "pytest",  # includes virtualenv
-    "pytest-cov",
-    "coverage==4.5.2",
-    "nose==1.3.7",
-]
+tests_require = ["coverage==4.5.2"]
 
 setuptools.setup(
     name="jc-decrypter",

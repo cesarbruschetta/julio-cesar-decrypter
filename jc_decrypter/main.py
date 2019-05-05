@@ -3,13 +3,14 @@ import pkg_resources
 import argparse
 import sys
 import logging
+from typing import List
 
 from jc_decrypter.processing import decrypter
 
 logger = logging.getLogger(__name__)
 
 
-def process(args):
+def process(args: List) -> int:
     """ method to main process """
 
     packtools_version = pkg_resources.get_distribution("jc-decrypter").version
@@ -28,11 +29,12 @@ def process(args):
     logger.setLevel(level)
 
     result = decrypter(args.token)
+    logger.info("Sua nota é: %(score)s", result["return_submit"])
 
     return 0
 
 
-def main():
+def main() -> None:
     """ method main to script setup.py """
     sys.exit(process(sys.argv[1:]))
 

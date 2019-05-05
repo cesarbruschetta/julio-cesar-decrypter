@@ -5,17 +5,19 @@ from jc_decrypter.main import process, main
 
 
 class TestMainProcess(unittest.TestCase):
-    @patch("jc_decrypter.processing.extrated.extrated_all_data")
-    def test_arg_extrateFiles(self, mk_extrated_all_data):
+    @patch("jc_decrypter.main.decrypter")
+    def test_arg_decrypter(self, mk_decrypter):
 
-        process(["--extrateFiles"])
-        mk_extrated_all_data.assert_called_once_with()
+        process(["--token", "1234567890"])
+        mk_decrypter.assert_called_once_with("1234567890")
 
     def test_not_arg(self):
 
         with self.assertRaises(SystemExit) as cm:
             process([])
-            self.assertEqual("Vc deve escolher algum parametro", str(cm.exception))
+            self.assertEqual(
+                "the following arguments are required: --token/-t", str(cm.exception)
+            )
 
 
 class TestMainMain(unittest.TestCase):
